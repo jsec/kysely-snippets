@@ -1,0 +1,45 @@
+{
+  "name": "node-ts-template",
+  "version": "1.0.0",
+  "description": "jsec's TypeScript starter kit",
+  "type": "module",
+  "scripts": {
+    "prepare": "node ./scripts/prepare.cjs",
+    "lint": "eslint --ext .ts . --max-warnings 0",
+    "test": "NODE_OPTIONS='--import=tsx --no-warnings' ava",
+    "test:coverage": "NODE_OPTIONS='--import=tsx --no-warnings' c8 ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jsec/node-ts-template.git"
+  },
+  "keywords": [],
+  "author": "Jarrod Seccombe <jarrod.seccombe@icloud.com>",
+  "license": "MIT",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "devDependencies": {
+    "@jarsec/eslint-config": "3.1.0",
+    "@jarsec/prettier-config": "1.2.1",
+    "@jarsec/tsconfig": "2.0.0",
+    "@types/node": "20.8.0",
+    "ava": "5.3.1",
+    "c8": "8.0.1",
+    "cz-conventional-changelog": "3.3.0",
+    "husky": "8.0.3",
+    "lint-staged": "15.0.2",
+    "tsx": "^3.14.0",
+    "typescript": "5.2.2"
+  },
+  "ava": {
+    "extensions": {
+      "ts": "commonjs"
+    },
+    "nodeArguments": [
+      "--loader=tsx"
+    ]
+  }
+}
