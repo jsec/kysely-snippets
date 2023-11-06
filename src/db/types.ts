@@ -1,31 +1,26 @@
-import { type Expression, type OperationNode, sql } from 'kysely';
+import type { ColumnType, Generated } from 'kysely';
 
-class JsonBase<T> implements Expression<T> {
-  value: T;
+export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
-  constructor(value: T) {
-    this.value = value;
-  }
+export type Json = ColumnType<JsonValue, JsonValue, JsonValue>;
+export type JsonPrimitive = boolean | number | string | undefined;
+export type JsonArray = JsonValue[];
+export type JsonObject = {
+  [K in string]?: JsonValue;
+};
 
-  get expressionType(): T | undefined {
-    return undefined;
-  }
+export type JsonValue = JsonArray | JsonObject | JsonPrimitive;
 
-  toOperationNode(): OperationNode {
-    throw new Error('Not Implemented');
-  }
-}
+export type JsonbTest = {
+  content: Json | undefined;
+  created_at: Generated<Timestamp>;
+  id: Generated<number>;
+  name: string;
+};
 
-export class JsonValue<T> extends JsonBase<T> {
-  toOperationNode(): OperationNode {
-    const json = JSON.stringify(this.value);
-    return sql`CAST(${json} AS JSON)`.toOperationNode();
-  }
-}
-
-export class JsonbValue<T> extends JsonBase<T> {
-  toOperationNode(): OperationNode {
-    const json = JSON.stringify(this.value);
-    return sql`CAST(${json} AS JSONB)`.toOperationNode();
-  }
-}
+export type JsonTest = {
+  content: Json | undefined;
+  created_at: Generated<Timestamp>;
+  id: Generated<number>;
+  name: string;
+};

@@ -14,9 +14,34 @@ const record = {
 };
 
 const run = async () => {
-  const jsonTest = await db.insertInto('json-test').values(record).executeTakeFirstOrThrow();
-  const jsonbTest = await db.insertInto('jsonb-test').values(record).executeTakeFirstOrThrow();
+  const jsonInsert = await db
+    .insertInto('json-test')
+    .values(record)
+    .returningAll()
+    .executeTakeFirstOrThrow();
 
-  console.log('json-test: ', jsonTest);
-  console.log('jsonb-test: ', jsonbTest);
+  const jsonbInsert = await db
+    .insertInto('jsonb-test')
+    .values(record)
+    .returningAll()
+    .executeTakeFirstOrThrow();
+
+  const json = await db
+    .selectFrom('json-test')
+    .where('id', '=', jsonInsert.id)
+    .selectAll()
+    .executeTakeFirstOrThrow();
+
+  const jsonb = await db
+    .selectFrom('jsonb-test')
+    .where('id', '=', jsonbInsert.id)
+    .selectAll()
+    .executeTakeFirstOrThrow();
+
+  return { json, jsonb };
 };
+
+void run().then(async result => {
+  console.log(result);
+  await db.destroy();
+});

@@ -2,21 +2,21 @@ import dotenv from 'dotenv';
 import { type ColumnType, type Generated, Kysely, PostgresDialect } from 'kysely';
 import { Pool } from 'pg';
 
-import { type JsonbValue, type JsonValue } from './types';
+import { type Json } from './types';
 
 dotenv.config();
 
 export type JsonTable = {
   id: Generated<number>;
   name: string;
-  content: ColumnType<JsonValue<never>, JsonValue<never>, JsonValue<never>>;
+  content: Json;
   createdAt: ColumnType<Date, string | undefined, never>;
 };
 
 export type JsonbTable = {
   id: Generated<number>;
   name: string;
-  content: ColumnType<JsonbValue<never>, JsonbValue<never>, JsonbValue<never>>;
+  content: Json;
   createdAt: ColumnType<Date, string | undefined, never>;
 };
 
